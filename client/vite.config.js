@@ -8,4 +8,8 @@ export default defineConfig({
     react(),
     tailwindcss(),
   ],
+  base: "./", // important for correct paths on Vercel
+  build: {
+    outDir: "dist",
+  },
 })

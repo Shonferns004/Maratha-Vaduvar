@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { CheckCircle2, XCircle, Mail, Phone, IndianRupee, Users, Loader2 } from "lucide-react";
 import { db } from "../../config/firebase.js"; // your firebase config
 import { collection, doc, getDocs, query, updateDoc, where } from "firebase/firestore";
+import { toast } from "react-toastify";
 
 const BACKENT_API =import.meta.env.VITE_BACKEND_URL
 
@@ -64,10 +65,11 @@ const Home = () => {
     <p>Best regards,<br/>The Marath Vaduvar Team</p>`
       );
 
-      alert(`${user.name} has been verified!`);
+      toast.success(`${user.name} has been verified!`);
     } catch (error) {
       console.error("Error verifying user:", error);
-      alert("Failed to verify user.");
+      toast.error("Failed to verify user.");
+
     }
   };
 
@@ -88,10 +90,11 @@ const Home = () => {
       );
 
       setUsers((prev) => prev.filter((u) => u.id !== user.id));
-      alert(`${user.name} has been rejected.`);
+      toast.success(`${user.name}  has been rejected.`);
+
     } catch (error) {
       console.error("Error rejecting user:", error);
-      alert("Failed to reject user.");
+      toast.error("Failed to reject user.");
     }
   };
 

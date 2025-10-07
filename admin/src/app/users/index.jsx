@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { collection, getDocs, doc, updateDoc } from "firebase/firestore";
 import { db } from "../../config/firebase.js";
 import { Users as UsersIcon, CheckCircle2, Clock, Mail, Phone, User, XCircle } from "lucide-react";
+import { toast } from "react-toastify";
 
 const Users = () => {
   const [users, setUsers] = useState([]);
@@ -32,10 +33,11 @@ const Users = () => {
       setUsers((prev) =>
         prev.map((user) => (user.id === userId ? { ...user, isPaid: false } : user))
       );
-      alert("User has been unverified successfully!");
+      toast.success("User has been unverified successfully!");
     } catch (error) {
       console.error("Error unverifying user:", error);
-      alert("Failed to unverify user.");
+      toast.error("Failed to unverify user.");
+
     }
   };
 
