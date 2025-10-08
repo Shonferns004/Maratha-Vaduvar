@@ -23,19 +23,20 @@ export default function Payment() {
   const [bgIndex, setBgIndex] = useState(0);
 
   useEffect(() => {
-    if (!currentUser) return;
+  if (!currentUser) return;
 
-    const unsub = onSnapshot(doc(db, "users", currentUser.uid), (docSnap) => {
-      if (docSnap.exists()) {
-        const data = docSnap.data();
-        if (data.payment?.status === "pending") {
-          navigate("/pending", { replace: true });
-        }
-      }
-    });
+  const unsub = onSnapshot(doc(db, "users", currentUser.uid), (docSnap) => {
+    if (!docSnap.exists()) return;
+    const data = docSnap.data();
 
-    return () => unsub();
-  }, [currentUser, navigate]);
+    const status = data.payment?.status;
+    if (status === "pending") navigate("/pending", { replace: true });
+    else if (status === "approved") navigate("/dashboard", { replace: true });
+    else if (status === "rejected") alert("Payment rejected. Please try again.");
+  });
+
+  return () => unsub();
+}, [currentUser, navigate]);
 
   useEffect(() => {
     const interval = setInterval(
@@ -67,6 +68,7 @@ export default function Payment() {
           submittedAt: serverTimestamp(),
         },
         isNew: false,
+        isRejected: false,
       },
       { merge: true }
     );

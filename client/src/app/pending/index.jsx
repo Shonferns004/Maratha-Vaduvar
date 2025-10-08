@@ -17,22 +17,20 @@ const Pending = () => {
   const [isPaid, setIsPaid] = useState(null);
   const [bgIndex, setBgIndex] = useState(0);
 
-  useEffect(() => {
-    if (!currentUser) return;
+useEffect(() => {
+  if (!currentUser) return;
 
-    const unsub = onSnapshot(doc(db, "users", currentUser.uid), (docSnap) => {
-      if (docSnap.exists()) {
-        const data = docSnap.data();
-        setIsPaid(data.isPaid === false);
+  const unsub = onSnapshot(doc(db, "users", currentUser.uid), (docSnap) => {
+    if (!docSnap.exists()) return;
+    const data = docSnap.data();
 
-        if (data.isPaid === true) {
-          navigate("/dashboard", { replace: true });
-        }
-      }
-    });
+    const status = data.payment?.status;
+    if (status === "approved") navigate("/dashboard", { replace: true });
+    else if (status === "rejected") navigate("/payment", { replace: true });
+  });
 
-    return () => unsub();
-  }, [currentUser, navigate]);
+  return () => unsub();
+}, [currentUser, navigate]);
 
   // Background slideshow
   useEffect(() => {

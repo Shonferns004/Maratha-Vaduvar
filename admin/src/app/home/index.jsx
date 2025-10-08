@@ -14,7 +14,11 @@ const Home = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const q = query(collection(db, "users"), where("isPaid", "==", false));
+       const q = query(
+  collection(db, "users"),
+  where("isPaid", "==", false),
+  where("payment.status", "==", "rejected")
+);
         const querySnapshot = await getDocs(q);
         const list = querySnapshot.docs.map((doc) => ({
           id: doc.id,
@@ -52,7 +56,7 @@ const Home = () => {
   const handleVerify = async (user) => {
     try {
       const userRef = doc(db, "users", user.id);
-      await updateDoc(userRef, { isPaid: true });
+      await updateDoc(userRef, { isPaid: true, "payment.status": "approved" });
 
       await sendEmail(
         user.email,
@@ -76,7 +80,10 @@ const Home = () => {
   const handleReject = async (user) => {
     try {
       const userRef = doc(db, "users", user.id);
-      await updateDoc(userRef, { isPaid: false });
+      await updateDoc(userRef, { 
+        isPaid: false,
+        "payment.status": "rejected"
+      });
       await sendEmail(
         user.email,
         "❌ Payment Rejected",
