@@ -631,43 +631,37 @@ function App() {
                       label="Rashi"
                       name="rashi"
                       icon={Heart}
-                      value={formData.rashi}
+                      value={formData.astrology.rashi}
                     />
                     <EditableField
                       label="Manglik Status"
                       name="manglik"
                       icon={Heart}
-                      value={formData.manglik}
+                      value={formData.astrology.manglik}
                     />
                     <EditableField
                       label="Charan"
                       name="charan"
                       icon={Heart}
-                      value={formData.charan}
+                      value={formData.astrology.charan}
                     />
                     <EditableField
                       label="Gan"
                       name="gan"
                       icon={Heart}
-                      value={formData.gan}
+                      value={formData.astrology.gan}
                     />
                     <EditableField
                       label="Nadi"
                       name="nadi"
                       icon={Heart}
-                      value={formData.nadi}
+                      value={formData.astrology.nadi}
                     />
                     <EditableField
                       label="Nakshatra"
                       name="nakshatra"
                       icon={Heart}
-                      value={formData.nakshatra}
-                    />
-                    <EditableField
-                      label="Day of Week"
-                      name="dayOfWeek"
-                      icon={Heart}
-                      value={formData.dayOfWeek}
+                      value={formData.astrology.nakshatra}
                     />
                   </div>
                 )}

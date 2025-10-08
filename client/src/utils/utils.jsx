@@ -26,8 +26,22 @@ const PaidRoute = ({ children }) => {
     return () => unsub();
   }, [currentUser]);
 
-  if (loading) return <div>Loading...</div>;
-
+ if (loading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-orange-50 to-rose-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="relative w-20 h-20 mx-auto mb-6">
+            <div className="absolute inset-0 border-4 border-orange-200 rounded-full"></div>
+            <div className="absolute inset-0 border-4 border-orange-600 border-t-transparent rounded-full animate-spin"></div>
+          </div>
+          <h2 className="text-2xl font-bold text-slate-800 mb-2">
+            Loading Dashboard
+          </h2>
+          <p className="text-slate-600">Please wait...</p>
+        </div>
+      </div>
+    );
+  }
   // if not logged in → go login
   if (!currentUser) return <Navigate to="/login" replace />;
 

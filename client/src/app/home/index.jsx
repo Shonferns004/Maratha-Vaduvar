@@ -13,7 +13,6 @@ const Home = () => {
 
   const { currentUser, logout } = useAuth();
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false)
 
 
   useEffect(() => {

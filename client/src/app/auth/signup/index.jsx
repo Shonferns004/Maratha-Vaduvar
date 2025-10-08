@@ -4,8 +4,9 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth, db } from "../../../config/firbase.js";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../../context/AuthContext.jsx";
-import { doc, setDoc } from "firebase/firestore";
+import { doc, setDoc,getDocs, query, where, collection } from "firebase/firestore";
 import { Heart, Mail, Lock, ArrowRight, Sparkles } from "lucide-react";
+import { toast } from "react-toastify";
 
 function Signup() {
   const [email, setEmail] = useState("");
@@ -35,36 +36,61 @@ function Signup() {
     return () => clearInterval(interval);
   }, [currentUser, navigate]);
 
-  const handleSignup = async (e) => {
-    e.preventDefault();
-    setError("");
+ const handleSignup = async (e) => {
+  e.preventDefault();
+  setError("");
 
-    if (password !== cfmPassword) {
-      setError("Passwords do not match.");
+  // 1️⃣ Check all required fields
+  if (!email || !password || !cfmPassword) {
+    toast.warn("Please fill all the fields");
+    return;
+  }
+
+  // 2️⃣ Passwords match
+  if (password !== cfmPassword) {
+    toast.error("Passwords do not match.");
+    return;
+  }
+
+  // 3️⃣ Strong password check
+  const strongPasswordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+  if (!strongPasswordRegex.test(password)) {
+    toast.error("Password must be at least 8 characters long, include uppercase, lowercase, number, and special character.");
+    return;
+  }
+
+  setLoading(true);
+  try {
+    // 4️⃣ Check if user already exists in Firestore
+    const userQuerySnapshot = await getDocs(query(collection(db, "users"), where("email", "==", email)));
+    if (!userQuerySnapshot.empty) {
+      toast.error("User with this email already exists!");
+      setLoading(false);
       return;
     }
 
-    setLoading(true);
-    try {
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      const user = userCredential.user;
+    // 5️⃣ Create user
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    const user = userCredential.user;
 
-      await setDoc(doc(db, "users", user.uid), {
-        uid: user.uid,
-        email: user.email,
-        name: user.displayName || "",
-        isNew: true,
-        isPaid: false,
-        createdAt: new Date(),
-      });
+    await setDoc(doc(db, "users", user.uid), {
+      uid: user.uid,
+      email: user.email,
+      name: user.displayName,
+      isNew: true,
+      isPaid: false,
+      createdAt: new Date(),
+    });
 
-      navigate("/details-1");
-    } catch (err) {
-      setError("Signup failed. " + err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
+    toast.success("Registered successfully!");
+    navigate("/details-1");
+  } catch (err) {
+    setError("Signup failed. " + err.message);
+    toast.error("Error Signing Up");
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <div className="relative min-h-screen w-full text-slate-800 overflow-hidden flex flex-col justify-center items-center">

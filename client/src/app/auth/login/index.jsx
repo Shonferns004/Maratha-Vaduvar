@@ -6,6 +6,7 @@ import { db, auth } from "../../../config/firbase";
 import { doc, getDoc } from "firebase/firestore";
 import { useAuth } from "../../../context/AuthContext";
 import { signInWithEmailAndPassword } from "firebase/auth";
+import { toast } from 'react-toastify';
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -48,30 +49,6 @@ function Login() {
 }, [currentUser, navigate]);
 
 
-  const handleLogin4 = async (e) => {
-    e.preventDefault();
-    setError("");
-    setLoading(true);
-    try {
-      // Firebase auth logic here
-       const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      const user = userCredential.user;
-      const docRef = doc(db, "users", user.uid);
-      const docSnap = await getDoc(docRef);
-      if (docSnap.exists() && docSnap.data().isNew) {
-        navigate("/details-1");
-      } else {
-        navigate("/dashboard");
-      }
-    } catch (err) {
-      if (err.code === "auth/user-not-found") setError("No account found with this email.");
-      else if (err.code === "auth/wrong-password") setError("Incorrect password. Try again.");
-      else setError("Failed to log in. Please try again.");
-    } finally {
-      setLoading(false);
-    }
-  };
-
   const handleLogin = async (e) => {
     e.preventDefault();
     setError("");
@@ -85,12 +62,15 @@ function Login() {
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists() && docSnap.data().isNew) {
-      navigate("/details-1"); // redirect new users
+      navigate("/details-1");
+      toast.warn("Please fill the details")
     } else {
-      navigate("/dashboard"); // regular users
+      navigate("/dashboard");
+      toast.success(`Sucessfully logged in as ${user.displayName}`)
     }
   } catch (err) {
-    setError(err.message);
+    toast.error(err.message)
+    setLoading(false)
   }
   };
 
