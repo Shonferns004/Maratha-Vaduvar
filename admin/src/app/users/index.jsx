@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { collection, getDocs, doc, updateDoc } from "firebase/firestore";
+import { collection, getDocs, doc, updateDoc,query, where } from "firebase/firestore";
 import { db } from "../../config/firebase.js";
 import { Users as UsersIcon, CheckCircle2, Clock, Mail, Phone, User, XCircle } from "lucide-react";
 import { toast } from "react-toastify";
@@ -12,10 +12,9 @@ const Users = () => {
 useEffect(() => {
   const fetchUsers = async () => {
     try {
-      // ✅ Fetch only users with paymentStatus == "pending"
       const q = query(
         collection(db, "users"),
-        where("payment.status", "==", "pending")
+        where("payment.status", "in", ["pending", "approved"])
       );
 
       const querySnapshot = await getDocs(q);
@@ -34,6 +33,7 @@ useEffect(() => {
 
   fetchUsers();
 }, []);
+
 
   // Handle "Unverify" action
   const handleUnverify = async (userId) => {
