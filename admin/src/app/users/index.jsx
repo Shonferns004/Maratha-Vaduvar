@@ -9,27 +9,37 @@ const Users = () => {
   const [loading, setLoading] = useState(true);
 
   // Fetch all users
-  useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const querySnapshot = await getDocs(collection(db, "users"));
-        const list = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-        setUsers(list);
-      } catch (error) {
-        console.error("Error fetching users:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
+useEffect(() => {
+  const fetchUsers = async () => {
+    try {
+      // ✅ Fetch only users with paymentStatus == "pending"
+      const q = query(
+        collection(db, "users"),
+        where("payment.status", "==", "pending")
+      );
 
-    fetchUsers();
-  }, []);
+      const querySnapshot = await getDocs(q);
+      const list = querySnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+
+      setUsers(list);
+    } catch (error) {
+      console.error("Error fetching users:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  fetchUsers();
+}, []);
 
   // Handle "Unverify" action
   const handleUnverify = async (userId) => {
     try {
       const userRef = doc(db, "users", userId);
-      await updateDoc(userRef, { isPaid: false });
+      await updateDoc(userRef, { isPaid: false, "payment.status": "rejected" });
       setUsers((prev) =>
         prev.map((user) => (user.id === userId ? { ...user, isPaid: false } : user))
       );

@@ -45,9 +45,6 @@ const PaidRoute = ({ children }) => {
   // if not logged in → go login
   if (!currentUser) return <Navigate to="/login" replace />;
 
-  // if logged in but unpaid → force to Pending
-  // if (!isPaid) return <Navigate to="/pending" replace />;
-
   return children;
 };
 

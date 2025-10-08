@@ -40,14 +40,6 @@ useEffect(() => {
     return () => clearInterval(interval);
   }, []);
 
-  if (isPaid === null) {
-    return (
-      <div className="min-h-screen flex items-center justify-center text-center font-serif">
-        <p className="text-lg text-orange-400 animate-pulse">Loading...</p>
-      </div>
-    );
-  }
-
   return (
     <div className="relative min-h-screen flex items-center justify-center px-4 ">
       {/* Background slideshow */}

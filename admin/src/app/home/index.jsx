@@ -17,7 +17,7 @@ const Home = () => {
        const q = query(
   collection(db, "users"),
   where("isPaid", "==", false),
-  where("payment.status", "==", "rejected")
+  where("payment.status", "==", "pending")
 );
         const querySnapshot = await getDocs(q);
         const list = querySnapshot.docs.map((doc) => ({

@@ -4,7 +4,7 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth, db } from "../../../config/firbase.js";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../../context/AuthContext.jsx";
-import { doc, setDoc,getDocs, query, where, collection } from "firebase/firestore";
+import { doc, setDoc,getDocs, query, where, collection, getDoc } from "firebase/firestore";
 import { Heart, Mail, Lock, ArrowRight, Sparkles } from "lucide-react";
 import { toast } from "react-toastify";
 
@@ -28,7 +28,23 @@ function Signup() {
   const [bgIndex, setBgIndex] = useState(0);
 
   useEffect(() => {
-    if (currentUser) navigate("/dashboard");
+    const checkUserStatus = async () => {
+  if (!currentUser || !currentUser.uid) return;
+  try {
+    const userRef = doc(db, "users", currentUser.uid);
+    const userSnap = await getDoc(userRef);
+
+    if (userSnap.exists()) {
+      const userData = userSnap.data();
+      if (!userData.isNew) navigate("/dashboard");
+    }
+  } catch (err) {
+    console.error("Error checking user:", err);
+  }
+};
+
+
+  checkUserStatus();
 
     const interval = setInterval(() => {
       setBgIndex((prev) => (prev + 1) % backgrounds.length);
