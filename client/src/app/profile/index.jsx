@@ -95,7 +95,7 @@ function App() {
 
         setPhotoLibrary(updatedLibrary);
         setFormData((prev) => ({ ...prev, photos: updatedLibrary })); // <-- keep in sync
-        toast.success("Photo deleted successfully! 🗑️");
+        toast.success("Photo Uploaded successfully!");
         setPhotoFile(null);
         setPhotoPreview(null);
       } else {

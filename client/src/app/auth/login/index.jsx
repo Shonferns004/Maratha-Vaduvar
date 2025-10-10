@@ -7,6 +7,8 @@ import { doc, getDoc } from "firebase/firestore";
 import { useAuth } from "../../../context/AuthContext";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { toast } from 'react-toastify';
+import { onAuthStateChanged } from "firebase/auth";
+
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -24,14 +26,27 @@ function Login() {
     "https://images.unsplash.com/photo-1609150370455-8beb3e7d35f4?q=80&w=1170&auto=format&fit=crop",
   ];
 
+  
+
+
   useEffect(() => {
     const interval = setInterval(() => {
       setBgIndex((prev) => (prev + 1) % backgrounds.length);
     }, 7000);
     return () => clearInterval(interval);
+
+    
   }, []);
 
   useEffect(() => {
+
+    onAuthStateChanged(auth, (user) => {
+  if (user) {
+    console.log("✅ Logged in as:", user.uid);
+  } else {
+    console.log("❌ Not logged in");
+  }
+});
   const checkUser = async () => {
     if (currentUser) {
       const docRef = doc(db, "users", currentUser.uid);

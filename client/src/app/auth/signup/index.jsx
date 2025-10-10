@@ -92,7 +92,7 @@ function Signup() {
     await setDoc(doc(db, "users", user.uid), {
       uid: user.uid,
       email: user.email,
-      name: user.displayName,
+      name: user.displayName  ,
       isNew: true,
       isPaid: false,
       createdAt: new Date(),
