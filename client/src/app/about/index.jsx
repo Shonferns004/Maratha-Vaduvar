@@ -31,7 +31,7 @@ const AboutUsPage = () => {
             transition={{ duration: 0.8 }}
             className="text-4xl sm:text-5xl font-bold"
           >
-            About Maratha Vaduvar
+            About Maratha Vadhuvar
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 10 }}
@@ -85,7 +85,7 @@ const AboutUsPage = () => {
             transition={{ delay: 0.2, duration: 0.8 }}
             className="text-gray-800 max-w-3xl mx-auto leading-relaxed"
           >
-            Maratha Vaduvar started as a small team of passionate individuals who wanted to help people find meaningful connections. Over the years, we’ve grown into a trusted platform that prioritizes safety, transparency, and love. Every successful match motivates us to continue our journey.
+            Maratha Vadhuvar started as a small team of passionate individuals who wanted to help people find meaningful connections. Over the years, we’ve grown into a trusted platform that prioritizes safety, transparency, and love. Every successful match motivates us to continue our journey.
           </motion.p>
         </div>
       </div>
@@ -166,7 +166,7 @@ const AboutUsPage = () => {
             className="bg-white/20 rounded-2xl p-6 backdrop-blur-sm shadow-lg"
           >
             <p className="text-gray-800">
-              "Maratha Vaduvar helped me find my soulmate. Everything was safe and smooth!" – Priya S.
+              "Maratha Vadhuvar helped me find my soulmate. Everything was safe and smooth!" – Priya S.
             </p>
           </motion.div>
           <motion.div
@@ -176,7 +176,7 @@ const AboutUsPage = () => {
             className="bg-white/20 rounded-2xl p-6 backdrop-blur-sm shadow-lg"
           >
             <p className="text-gray-800">
-              "Thanks to Maratha Vaduvar, I met someone special. Highly recommend it!" – Raj K.
+              "Thanks to Maratha Vadhuvar, I met someone special. Highly recommend it!" – Raj K.
             </p>
           </motion.div>
           <motion.div

@@ -32,7 +32,7 @@ const HeroSection = () => {
             className="flex justify-center md:justify-start items-center gap-2 text-sm sm:text-base uppercase tracking-wider font-medium text-amber-200"
           >
             <Heart className="w-5 h-5 text-amber-300 fill-amber-300" />
-            <span>Welcome to Maratha Vaduvar</span>
+            <span>Welcome to Maratha Vadhuvar</span>
           </motion.div>
 
           <motion.h1

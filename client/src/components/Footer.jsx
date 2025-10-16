@@ -12,12 +12,12 @@ const Footer = () => {
         {/* Left Section */}
         <div className="flex flex-col items-center md:items-start text-center md:text-left space-y-3">
           <Heart className="w-12 h-12 text-amber-400 animate-pulse" />
-          <h2 className="text-2xl font-bold">Maratha Vaduvar</h2>
+          <h2 className="text-2xl font-bold">Maratha Vadhuvar</h2>
           <p className="text-gray-800 text-sm md:max-w-xs">
             Bringing love and meaningful connections together since 2025
           </p>
           <p className="text-gray-600 text-xs mt-2">
-            &copy; {new Date().getFullYear()} Maratha Vaduvar. All rights reserved.
+            &copy; {new Date().getFullYear()} Maratha Vadhuvar. All rights reserved.
           </p>
         </div>
 
@@ -60,7 +60,7 @@ const Footer = () => {
 
       {/* Bottom Bar */}
       <div className="mt-10 border-t border-white/30 pt-6 text-center text-gray-700 text-sm">
-        Made with ❤️ by Maratha Vaduvar Team
+        Made with ❤️ by Maratha Vadhuvar Team
       </div>
     </footer>
   );

@@ -111,7 +111,7 @@ function Login() {
         {/* Title */}
         <div className="text-center space-y-3 sm:space-y-4">
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-serif font-bold text-white drop-shadow-lg">
-            Maratha <span className="text-orange-400">Vaduvar</span>
+            Maratha <span className="text-orange-400">Vadhuvar</span>
           </h1>
           <div className="flex items-center justify-center gap-2">
             <div className="h-px w-12 sm:w-16 bg-gradient-to-r from-transparent via-orange-300 to-transparent"></div>

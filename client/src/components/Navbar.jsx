@@ -34,11 +34,11 @@ const Navbar = () => {
           {/* ✅ Replace Heart icon with your logo image */}
           <img
             src={img2   } // 👉 Replace with your actual logo path (e.g., /assets/logo.png)
-            alt="Maratha Vaduvar Logo"
+            alt="Maratha Vadhuvar Logo"
             className="w-10 h-10 rounded-full shadow-lg object-cover border border-orange-400"
           />
           <span>
-            Maratha <span className="text-orange-400">Vaduvar</span>
+            Maratha <span className="text-orange-400">Vadhuvar</span>
           </span>
         </Link>
 

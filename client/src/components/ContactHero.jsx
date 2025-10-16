@@ -25,7 +25,7 @@ const ContactHero = () => {
           transition={{ delay: 0.2, duration: 0.8 }}
           className="text-3xl sm:text-4xl md:text-5xl font-bold leading-tight"
         >
-          Contact Maratha Vaduvar
+          Contact Maratha Vadhuvar
         </motion.h1>
 
         <motion.p

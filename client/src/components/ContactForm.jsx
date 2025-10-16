@@ -135,7 +135,7 @@ const Contact = () => {
           className="rounded-3xl overflow-hidden shadow-xl border border-white/10"
         >
           <iframe
-            title="Martaha Vaduvar Location"
+            title="Martaha Vadhuvar Location"
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d241317.1160980308!2d72.74109972707407!3d19.08219783955737!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7b63a6a8bcdcd%3A0x6e98e6a5c4a7e8!2sMumbai%2C%20Maharashtra!5e0!3m2!1sen!2sin!4v1696420000000!5m2!1sen!2sin"
             width="100%"
             height="400"
