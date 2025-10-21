@@ -3,6 +3,7 @@ import { CheckCircle2, XCircle, Mail, Phone, IndianRupee, Users, Loader2 } from 
 import { db } from "../../config/firebase.js"; // your firebase config
 import { collection, doc, getDocs, query, updateDoc, where } from "firebase/firestore";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const BACKENT_API =import.meta.env.VITE_BACKEND_URL
 
@@ -10,6 +11,17 @@ const BACKENT_API =import.meta.env.VITE_BACKEND_URL
 const Home = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
+
+
+
+    // 1️⃣ Redirect to login if admin not logged in
+  useEffect(() => {
+    const adminUser = localStorage.getItem("adminUser");
+    if (!adminUser) {
+      navigate("/login", { replace: true });
+    }
+  }, [navigate]);
 
   useEffect(() => {
     const fetchUsers = async () => {

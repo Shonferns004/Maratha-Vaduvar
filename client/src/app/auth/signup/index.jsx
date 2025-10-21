@@ -201,18 +201,6 @@ function Signup() {
               </>
             )}
           </button>
-
-          {/* Login link */}
-          <p className="text-white text-center text-xs sm:text-sm font-medium">
-            Already part of our family?{" "}
-            <button
-              type="button"
-              onClick={() => navigate("/login")}
-              className="text-amber-300 hover:text-amber-200 font-bold underline decoration-2 underline-offset-2"
-            >
-              Login Here
-            </button>
-          </p>
         </form>
 
         {/* Bottom text */}
