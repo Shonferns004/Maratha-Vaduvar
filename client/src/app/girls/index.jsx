@@ -33,7 +33,7 @@ function App() {
         const data = snapshot.docs
           .map((doc) => ({ id: doc.id, ...doc.data() }))
           .filter(
-            (p) => p.gender === "Female" && p.id !== currentUser?.uid // Exclude logged-in user
+            (p) => p.gender === "Female"  && p.payment?.status?.toLowerCase() === "approved" && p.id !== currentUser?.uid // Exclude logged-in user
           );
 
         setProfiles(data);

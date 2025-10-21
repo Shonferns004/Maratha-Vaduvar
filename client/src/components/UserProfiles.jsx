@@ -17,24 +17,37 @@
     const { currentUser } = useAuth();
 
     const fetchUsers = async () => {
-      setLoading(true);
-      const q = query(collection(db, "users"), orderBy("name"));
-      const snapshot = await getDocs(q);
-      let fetchedUsers = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+  setLoading(true);
+  try {
+    const q = query(collection(db, "users"), orderBy("name"));
+    const snapshot = await getDocs(q);
 
-      if (currentUser) {
-        fetchedUsers = fetchedUsers.filter(user => user.uid !== currentUser.uid);
-      }
+    // Map Firestore docs to user objects
+    let fetchedUsers = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 
-      const paginated = [];
-      for (let i = 0; i < fetchedUsers.length; i += PAGE_SIZE) {
-        paginated.push(fetchedUsers.slice(i, i + PAGE_SIZE));
-      }
+    // ✅ Filter users whose payment.status === 'verified'
+    fetchedUsers = fetchedUsers.filter(user => {
+      // exclude current user
+      if (currentUser && user.uid === currentUser.uid) return false;
 
-      setPages(paginated);
-      setUsers(paginated[0] || []);
-      setLoading(false);
-    };
+      // payment should be an object and verified
+      return user.payment?.status?.toLowerCase() === "approved";
+    });
+
+    // ✅ Paginate
+    const paginated = [];
+    for (let i = 0; i < fetchedUsers.length; i += PAGE_SIZE) {
+      paginated.push(fetchedUsers.slice(i, i + PAGE_SIZE));
+    }
+
+    setPages(paginated);
+    setUsers(paginated[0] || []);
+  } catch (error) {
+    console.error("Error fetching users:", error);
+  } finally {
+    setLoading(false);
+  }
+};
 
     useEffect(() => {
       fetchUsers();

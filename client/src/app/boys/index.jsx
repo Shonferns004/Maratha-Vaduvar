@@ -27,38 +27,41 @@ function App() {
 
   // Fetch all male users except the logged-in user
   useEffect(() => {
-    const fetchProfiles = async () => {
-      try {
-        const snapshot = await getDocs(collection(db, "users"));
-        const data = snapshot.docs
-          .map((doc) => ({ id: doc.id, ...doc.data() }))
-          .filter(
-            (p) => p.gender === "Male" && p.id !== currentUser?.uid // Exclude logged-in user
-          );
+  const fetchProfiles = async () => {
+    try {
+      const snapshot = await getDocs(collection(db, "users"));
+      const data = snapshot.docs
+        .map((doc) => ({ id: doc.id, ...doc.data() }))
+        .filter(
+          (p) =>
+            p.gender?.toLowerCase() === "male" && // ✅ Only males
+            p.payment?.status?.toLowerCase() === "approved" && // ✅ Only approved
+            p.uid !== currentUser?.uid // ✅ Exclude logged-in user
+        );
 
-        setProfiles(data);
-        setFilteredProfiles(data);
+      setProfiles(data);
+      setFilteredProfiles(data);
 
-        // Extract unique hobbies
-        const allHobbies = new Set();
-        data.forEach((p) => p.hobbies?.forEach((h) => allHobbies.add(h)));
-        setHobbies(Array.from(allHobbies));
+      // ✅ Extract unique hobbies, educations, professions for filter options
+      const allHobbies = new Set();
+      data.forEach((p) => p.hobbies?.forEach((h) => allHobbies.add(h)));
+      setHobbies(Array.from(allHobbies));
 
-        // Extract unique educations
-        const eduSet = new Set();
-        data.forEach((p) => p.education && eduSet.add(p.education));
-        setEducations(Array.from(eduSet));
+      const eduSet = new Set();
+      data.forEach((p) => p.education && eduSet.add(p.education));
+      setEducations(Array.from(eduSet));
 
-        // Extract unique professions
-        const profSet = new Set();
-        data.forEach((p) => p.profession && profSet.add(p.profession));
-        setProfessions(Array.from(profSet));
-      } catch (err) {
-        console.error(err);
-      }
-    };
-    fetchProfiles();
-  }, [currentUser]);
+      const profSet = new Set();
+      data.forEach((p) => p.profession && profSet.add(p.profession));
+      setProfessions(Array.from(profSet));
+    } catch (err) {
+      console.error("Error fetching profiles:", err);
+    }
+  };
+
+  fetchProfiles();
+}, [currentUser]);
+
 
   // Filter whenever filters change
   useEffect(() => {
