@@ -111,13 +111,7 @@
                         </div>
                       </div>
 
-                      {/* Like Button */}
-                      <button
-                        onClick={(e) => e.stopPropagation()}
-                        className="absolute top-3 left-3 z-30 w-9 h-9 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center shadow-lg hover:bg-red-50 transition-all duration-300 group/like"
-                      >
-                        <Heart className="w-4 h-4 text-slate-400 group-hover/like:text-red-500 group-hover/like:fill-red-500 transition-all" />
-                      </button>
+                      
 
                       {/* Name Overlay */}
                       <div className="absolute bottom-0 left-0 right-0 p-5 z-30">
@@ -147,7 +141,6 @@
                         <span className="text-sm text-slate-600 font-medium">View Profile</span>
                         <div className="flex items-center gap-1">
                           <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                          <span className="text-xs text-slate-500">Active</span>
                         </div>
                       </div>
                     </div>
